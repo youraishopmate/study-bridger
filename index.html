@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyBridger — Find where you belong, worldwide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16233F;
+    --ink-soft:#2B3B5C;
+    --paper:#F4F2EC;
+    --paper-warm:#EDEAE0;
+    --gold:#D9A441;
+    --gold-deep:#B9822C;
+    --teal:#1F6F5C;
+    --slate:#42506A;
+    --line:#D9D4C6;
+    --radius:3px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter', sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.6;
+    font-size:16.5px;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    line-height:1.15;
+  }
+  a{color:inherit;}
+  img,svg{display:block; max-width:100%;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+
+  /* ---- Nav ---- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(244,242,236,0.94);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:72px;
+  }
+  .logo{
+    font-family:'Fraunces', serif;
+    font-size:22px; font-weight:600;
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo svg{width:24px; height:24px;}
+  .navlinks{display:flex; align-items:center; gap:36px; font-size:15px; font-weight:500; color:var(--ink-soft);}
+  .navlinks a{text-decoration:none; transition:color .15s;}
+  .navlinks a:hover{color:var(--ink);}
+  .nav-cta{
+    background:var(--ink); color:var(--paper);
+    padding:10px 20px; border-radius:var(--radius);
+    font-size:14px; font-weight:500; text-decoration:none;
+    transition:background .15s;
+  }
+  .nav-cta:hover{background:var(--ink-soft);}
+
+  /* ---- Hero ---- */
+  .hero{padding:100px 0 90px; overflow:hidden; position:relative;}
+  .hero-grid{
+    position:relative; z-index:2;
+    max-width:760px; margin:0 auto; text-align:center;
+  }
+  .hero-bridge-bg{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    width:1100px; max-width:none; opacity:0.16; z-index:1; pointer-events:none;
+  }
+  h1.headline{
+    font-size:clamp(34px, 4.4vw, 52px);
+    max-width:15em;
+    margin:0 auto 20px;
+  }
+  .rotate-line{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:clamp(20px, 2.4vw, 27px);
+    color:var(--ink-soft);
+    margin-bottom:22px;
+  }
+  .rotate-word{
+    color:var(--teal);
+    font-style:italic;
+    font-weight:600;
+    display:inline-block;
+    min-width:9ch;
+    transition:opacity .35s ease, transform .35s ease;
+  }
+  .rotate-word.fade{opacity:0; transform:translateY(4px);}
+  .sub{
+    font-size:18.5px; color:var(--slate); max-width:44ch; margin:0 auto 32px; line-height:1.65;
+  }
+  .signup-form{
+    display:flex; gap:10px; max-width:440px; margin:0 auto 16px;
+  }
+  .signup-form input{
+    flex:1; padding:14px 16px; font-size:15px;
+    border:1px solid #9AA5B5; border-radius:var(--radius);
+    background:#fff; font-family:'Inter', sans-serif; color:var(--ink);
+  }
+  .signup-form input:focus{outline:2px solid var(--teal); outline-offset:1px;}
+  .signup-form button{
+    background:var(--gold); color:var(--ink); border:none;
+    padding:14px 22px; border-radius:var(--radius);
+    font-size:15px; font-weight:600; cursor:pointer;
+    white-space:nowrap;
+    transition:background .15s;
+    font-family:'Inter', sans-serif;
+  }
+  .signup-form button:hover{background:var(--gold-deep);}
+  .form-note{font-size:14px; color:var(--slate); text-align:center;}
+  .form-success{
+    display:none; font-size:15px; color:var(--teal); font-weight:600; margin:0 auto 16px; text-align:center;
+  }
+
+  .bridge-visual{position:relative;}
+  .bridge-visual svg{width:100%; height:auto;}
+
+  /* ---- How it works ---- */
+  .section{padding:88px 0;}
+  .divider-band{
+    height:46px; width:100%;
+    background-repeat:repeat-x;
+    background-position:center;
+    opacity:0.55;
+  }
+  .section-head{
+    margin-bottom:52px;
+  }
+  .section-head h2{font-size:clamp(27px, 3vw, 34px); max-width:18ch; margin-bottom:12px;}
+  .section-head p{font-size:16.5px; color:var(--slate); max-width:40ch;}
+
+  .steps{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:0;
+    border-top:1px solid var(--line);
+  }
+  .step{
+    padding:32px 30px 4px 0; border-right:1px solid var(--line);
+  }
+  .step:last-child{border-right:none;}
+  .step-num{
+    font-family:'Fraunces', serif; font-size:15px; color:var(--gold-deep);
+    margin-bottom:18px; font-weight:600;
+  }
+  .step h3{font-size:21px; margin-bottom:10px;}
+  .step p{font-size:15.5px; color:var(--slate); max-width:30ch; line-height:1.6;}
+
+  /* ---- Closing CTA ---- */
+  .closing{
+    position:relative;
+    padding:110px 0 120px; text-align:center;
+    background:var(--ink); color:var(--paper);
+    overflow:hidden;
+  }
+  .closing-bridge-bg{
+    position:absolute; inset:0; width:100%; height:100%;
+    opacity:0.14;
+  }
+  .closing .inner{position:relative; z-index:2;}
+  .closing h2{font-size:clamp(27px, 3.4vw, 38px); max-width:18ch; margin:0 auto 16px; color:var(--paper);}
+  .closing p{font-size:16.5px; color:#B9C2D2; max-width:40ch; margin:0 auto 32px;}
+  .closing .signup-form{margin:0 auto 16px;}
+  .closing .form-note{max-width:440px; margin:0 auto; color:#9AA7BC;}
+  .closing .form-success{color:var(--gold); margin-left:auto; margin-right:auto;}
+
+  /* ---- Footer ---- */
+  footer{border-top:1px solid var(--line); padding:34px 0;}
+  footer .wrap{
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:13.5px; color:var(--slate);
+  }
+  footer .flinks{display:flex; gap:24px;}
+  footer a{text-decoration:none;}
+  footer a:hover{color:var(--ink);}
+
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr; gap:44px;}
+    .bridge-visual{order:-1;}
+    .navlinks{display:none;}
+    .steps{grid-template-columns:1fr; border-top:none;}
+    .step{border-right:none; border-top:1px solid var(--line); padding:26px 0 0;}
+    .signup-form{flex-direction:column;}
+    footer .wrap{flex-direction:column; gap:14px; text-align:center;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .rotate-word{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M2 17h20M5 17v-4M9 17V9M15 17V9M19 17v-4M2 9h20" stroke="#16233F" stroke-width="1.6" stroke-linecap="round"/></svg>
+      StudyBridger
+    </div>
+    <div class="navlinks">
+      <a href="#how">How it works</a>
+    </div>
+    <a class="nav-cta" href="#join">Get early access</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <svg class="hero-bridge-bg" viewBox="0 0 1200 420" xmlns="http://www.w3.org/2000/svg">
+    <rect x="220" y="70" width="6" height="260" fill="#16233F"/>
+    <rect x="974" y="70" width="6" height="260" fill="#16233F"/>
+    <rect x="90" y="325" width="1020" height="9" fill="#16233F"/>
+    <rect x="220" y="334" width="7" height="40" fill="#16233F"/>
+    <rect x="973" y="334" width="7" height="40" fill="#16233F"/>
+    <g stroke="#16233F" stroke-width="1.6">
+      <line x1="223" y1="78" x2="120" y2="325"/>
+      <line x1="223" y1="108" x2="180" y2="325"/>
+      <line x1="223" y1="138" x2="240" y2="325"/>
+      <line x1="223" y1="168" x2="300" y2="325"/>
+      <line x1="223" y1="198" x2="360" y2="325"/>
+      <line x1="223" y1="228" x2="420" y2="325"/>
+      <line x1="223" y1="258" x2="480" y2="325"/>
+      <line x1="223" y1="288" x2="540" y2="325"/>
+      <line x1="977" y1="78" x2="1080" y2="325"/>
+      <line x1="977" y1="108" x2="1020" y2="325"/>
+      <line x1="977" y1="138" x2="960" y2="325"/>
+      <line x1="977" y1="168" x2="900" y2="325"/>
+      <line x1="977" y1="198" x2="840" y2="325"/>
+      <line x1="977" y1="228" x2="780" y2="325"/>
+      <line x1="977" y1="258" x2="720" y2="325"/>
+      <line x1="977" y1="288" x2="660" y2="325"/>
+    </g>
+  </svg>
+  <div class="wrap hero-grid">
+    <h1 class="headline">Find where you belong, not just where you'd get in.</h1>
+    <p class="rotate-line">Study in <span class="rotate-word" id="rotateWord">Europe</span>.</p>
+    <p class="sub">StudyBridger matches you to real universities and courses worldwide — then shows you everything you need to decide.</p>
+    <form class="signup-form" id="waitlistForm">
+      <input type="email" id="emailInput" placeholder="your@email.com" required aria-label="Email address">
+      <button type="submit">Join the waitlist</button>
+    </form>
+    <p class="form-success" id="formSuccess">You're on the list — we'll email you the moment matching opens.</p>
+    <p class="form-note">Free for students, always. No spam, one email when we launch.</p>
+  </div>
+</section>
+
+<div class="divider-band" style="background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2246%22><path d=%22M0 40 L20 14 L40 40 L60 14 L80 40%22 stroke=%22%23D9D4C6%22 stroke-width=%221.4%22 fill=%22none%22/></svg>');"></div>
+
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Three questions closer to your decision</h2>
+      <p>No sign-up walls, no generic rankings lists. Just a direct path from "where should I go" to "here's why."</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Tell us about you</h3>
+        <p>Academic background, budget, preferred field, and what you actually want out of studying abroad — career, immigration, experience.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Get matched, explained</h3>
+        <p>See ranked universities and courses with a plain-language summary of why each one fits — not just a list of names.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Read everything, in one place</h3>
+        <p>Click through to full details: fees, deadlines, visa process, scholarships, and what past students say about the city.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="closing" id="join">
+  <svg class="closing-bridge-bg" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <rect x="120" y="120" width="6" height="140" fill="#F4F2EC"/>
+    <rect x="1074" y="120" width="6" height="140" fill="#F4F2EC"/>
+    <rect x="60" y="250" width="1080" height="8" fill="#F4F2EC"/>
+    <g stroke="#D9A441" stroke-width="1.6">
+      <line x1="123" y1="128" x2="240" y2="250"/>
+      <line x1="123" y1="150" x2="300" y2="250"/>
+      <line x1="123" y1="172" x2="360" y2="250"/>
+      <line x1="123" y1="194" x2="420" y2="250"/>
+      <line x1="123" y1="216" x2="480" y2="250"/>
+      <line x1="123" y1="238" x2="540" y2="250"/>
+      <line x1="1077" y1="128" x2="960" y2="250"/>
+      <line x1="1077" y1="150" x2="900" y2="250"/>
+      <line x1="1077" y1="172" x2="840" y2="250"/>
+      <line x1="1077" y1="194" x2="780" y2="250"/>
+      <line x1="1077" y1="216" x2="720" y2="250"/>
+      <line x1="1077" y1="238" x2="660" y2="250"/>
+    </g>
+  </svg>
+  <div class="wrap inner">
+    <h2>Be matched the day we open the doors</h2>
+    <p>Join the waitlist and we'll email you first — before we announce anything publicly.</p>
+    <form class="signup-form" id="waitlistForm2">
+      <input type="email" id="emailInput2" placeholder="your@email.com" required aria-label="Email address">
+      <button type="submit">Join the waitlist</button>
+    </form>
+    <p class="form-success" id="formSuccess2">You're on the list — we'll email you the moment matching opens.</p>
+    <p class="form-note">Free for students, always. No spam, one email when we launch.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 StudyBridger. Not yet launched — this is an early preview.</div>
+    <div class="flinks">
+      <a href="#how">How it works</a>
+      <a href="mailto:hello@example.com">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function handleSignup(formId, inputId, successId){
+    var form = document.getElementById(formId);
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var email = document.getElementById(inputId).value;
+      if(!email) return;
+      // Placeholder: wire this to your email provider (ConvertKit/Mailchimp) or Supabase table.
+      form.style.display = 'none';
+      document.getElementById(successId).style.display = 'block';
+    });
+  }
+  handleSignup('waitlistForm', 'emailInput', 'formSuccess');
+  handleSignup('waitlistForm2', 'emailInput2', 'formSuccess2');
+
+  // Rotating continent word
+  var continents = ['Europe', 'North America', 'Asia', 'Australia', 'Africa', 'South America'];
+  var idx = 0;
+  var rotateEl = document.getElementById('rotateWord');
+  setInterval(function(){
+    rotateEl.classList.add('fade');
+    setTimeout(function(){
+      idx = (idx + 1) % continents.length;
+      rotateEl.textContent = continents[idx];
+      rotateEl.classList.remove('fade');
+    }, 350);
+  }, 2200);
+</script>
+
+</body>
+</html>
